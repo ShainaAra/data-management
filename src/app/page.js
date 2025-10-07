@@ -2,11 +2,12 @@ import Image from "next/image";
 import Logo from "./images/aretex-blue.png";
 import GoogleIcon from "./images/google.png";
 
-import { Button } from "@/components/ui/button"
+
 import {
   Card,
   CardContent,
 } from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
@@ -14,8 +15,10 @@ export default function Home() {
       <Card className="p-8 
                       rounded-xl 
                       text-center 
-                      shadow-xl 
-                      bg-white">
+                      shadow-xl
+                      text-gray-900 
+                      dark:bg-gray-900
+                      dark:text-gray-900">
         <div className="mb-6">
            <Image
             src={Logo}
@@ -28,7 +31,7 @@ export default function Home() {
 
        <CardContent className="space-y-2 text-left">
           <h1 className="text-2xl font-semibold">Sign in</h1>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             to continue to AretexDashboard
           </p>
         </CardContent>
@@ -43,7 +46,10 @@ export default function Home() {
                        px-8 py-4 
                        text-gray-700 
                        border-gray-300 
-                       hover:bg-gray-100">
+                       hover:bg-gray-100
+                       dark:text-gray-700
+                       dark:border-gray-700
+                       dark:hover:bg-gray-800">
 
             <div className="flex items-center gap-2">
                 <Image
