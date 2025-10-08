@@ -18,6 +18,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { Home, User, Download, Upload } from "lucide-react"
 
 export function NavProjects({
   projects
