@@ -15,8 +15,8 @@ import {
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/sidebar/nav-projects"
-import { NavUser } from "@/components/sidebar/nav-user"
+import { NavProjects } from "@/components/sidebar/sidebar-projects"
+import { NavUser } from "@/components/sidebar/sidebar-user"
 import { TeamSwitcher } from "@/components/sidebar/team-switcher"
 import {
   Sidebar,

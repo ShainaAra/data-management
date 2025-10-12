@@ -2,17 +2,13 @@
 
 import * as React from "react"
 import Image from "next/image"
-import Link from "next/link"
 import {
   SidebarProvider,
   Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupLabel,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { NavLinks } from "@/components/sidebar/nav-links"
 import AretexLogo from "../images/aretex-blue.png"
+import { NavHeader } from "@/components/sidebar/sidebar-header"
 
 export default function Layout({ children }) {
   return (
@@ -20,14 +16,7 @@ export default function Layout({ children }) {
       <div className="flex h-screen w-full">
         {/* Sidebar */}
         <Sidebar className="bg-gray-800 w-64">
-          <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-gray-500 px-4 py-2 text-sm">
-                Dashboard
-              </SidebarGroupLabel>
-              <NavLinks />
-            </SidebarGroup>
-          </SidebarContent>
+          <NavHeader />
         </Sidebar>
 
         {/* Main content */}

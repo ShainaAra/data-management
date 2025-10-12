@@ -33,7 +33,7 @@ export const navLinks = [
   },
 ]
 
-// ✅ New component to render the sidebar links
+// render the sidebar links
 export function NavLinks() {
   return (
     <SidebarGroupContent>
