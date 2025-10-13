@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sidebar"
 import AretexLogo from "../images/aretex-blue.png"
 import { NavHeader } from "@/components/sidebar/sidebar-header"
+import { NavLinks } from "@/components/sidebar/sidebar-links"
 
 export default function Layout({ children }) {
   return (
@@ -17,6 +18,7 @@ export default function Layout({ children }) {
         {/* Sidebar */}
         <Sidebar className="bg-gray-800 w-64">
           <NavHeader />
+          <NavLinks/>
         </Sidebar>
 
         {/* Main content */}

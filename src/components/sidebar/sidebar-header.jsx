@@ -16,9 +16,6 @@ export function NavHeader() {
         <SidebarGroupLabel className="text-gray-500 px-4 py-2 text-sm">
           Dashboard
         </SidebarGroupLabel>
-        <SidebarGroupContent>
-          <NavLinks />
-        </SidebarGroupContent>
       </SidebarGroup>
     </SidebarHeader>
   )
