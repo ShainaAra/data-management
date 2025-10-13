@@ -23,15 +23,10 @@ export default function RootLayout({
   }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased 
-        bg-cover bg-center bg-no-repeat
-        bg-[url('images/bg-light.png')] 
-        dark:bg-[url('app/images/bg-dark.png)]
-        min-h-screen 
-        flex 
-        items-center 
-        justify-center`} 
+    <body className={`${geistSans.variable} ${geistMono.variable} antialiased 
+      min-h-screen 
+      flex items-center 
+      justify-center system-bg`}
       >
         <ThemeProvider
           attribute="class"
