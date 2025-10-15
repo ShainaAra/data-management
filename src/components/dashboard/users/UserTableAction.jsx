@@ -4,6 +4,7 @@ const UserTableAction = () => {
   return (
     <div className="bg-white shadow-md rounded-lg px-6 py-4 flex justify-between items-center">
       {/* Search Bar */}
+      
       <div className="relative w-1/2">
         <Search
           className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none"
