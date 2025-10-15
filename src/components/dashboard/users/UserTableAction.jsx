@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 const UserTableAction = () => {
   return (
     <div
-      className="bg-white shadow-md rounded-lg px-6 py-4 flex justify-between items-center mt-[5px]"
+      className="bg-white shadow-md rounded-lg px-6 py-4 flex justify-between items-center"
     >
       {/* Search Bar */}
       <div className="relative w-1/2">
