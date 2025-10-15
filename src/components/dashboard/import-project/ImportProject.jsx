@@ -7,7 +7,7 @@ import ImportTable from "./ImportTable";
 export default function ImportProject() {
   return (
     //spacing from header and between cards
-    <div className="px-6 pt-2 pb-4">
+    <div className="-mx-1 pt-2 pb-4">
 
       {/* action Card */}
       <div className="bg-white border 
