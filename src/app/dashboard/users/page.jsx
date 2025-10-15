@@ -5,7 +5,7 @@ import UserProfile from "@/components/dashboard/users/UserProfile"; // keep this
 
 const UsersPage = () => {
   return (
-   <div className="-mx-2 pt-2 pb-4">
+   <div className="-mx-1 pt-2 pb-4">
       {/* Top bar section */}
       <UserTableAction />
 
