@@ -34,7 +34,7 @@ export default function Layout({ children }) {
             />
           </header>
 
-          <main className="flex-1 overflow-y-auto p-5">{children}</main>
+          <main className="flex-1 overflow-y-auto pt-1 px-5 pb-5">{children}</main>
         </div>
       </div>
     </SidebarProvider>
