@@ -22,12 +22,12 @@ export const navLinks = [
     icon: User,
   },
   {
-    title: "Import Project",
+    title: "Import Projects",
     href: "/dashboard/import-project",
     icon: Download,
   },
   {
-    title: "Export Project",
+    title: "Export Projects",
     href: "/dashboard/export-project",
     icon: Upload,
   },
