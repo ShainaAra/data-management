@@ -1,7 +1,7 @@
 import React from "react";
 import UserTableAction from "@/components/dashboard/users/UserTableAction";
 import UserTable from "@/components/dashboard/users/UserTable";
-import UserProfile from "@/components/dashboard/users/UserProfile"; // keep this if needed elsewhere
+import UserProfile from "@/app/dashboard/users/[userId]/UserProfile"; // keep this if needed elsewhere
 
 const UsersPage = () => {
   return (
@@ -12,8 +12,8 @@ const UsersPage = () => {
       {/* Table section */}
       <UserTable />
 
-      {/* Optional: UserProfile (if you want to display below or conditionally) */}
-      {/* <UserProfile /> */}
+      {/* User Profile */}
+      <UserProfile />
     </div>
   );
 };
