@@ -83,7 +83,7 @@ const UserTableAction = () => {
               className="space-y-4 mt-2"
             >
               <div className="grid gap-2">
-                <Label htmlFor="name">Enter your name</Label>
+                <Label htmlFor="name">Full Name</Label>
                 <Input id="name" name="name" placeholder="Enter name" required />
               </div>
 
