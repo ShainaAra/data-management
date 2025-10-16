@@ -49,32 +49,44 @@ export default function ImportTable() {
   };
 
   return (
-    <div className="overflow-x-auto rounded-2xl shadow-sm border border-gray-200 bg-white">
+    <div className="overflow-x-auto 
+                    rounded-2xl 
+                    shadow-sm border 
+                  border-gray-200 
+                  bg-white">
+
       <table className="min-w-full border-collapse">
         <thead className="bg-gray-50 text-gray-700">
+
           <tr>
             <th className="px-4 py-3 text-left">
               <Checkbox aria-label="Select all projects" />
             </th>
+
             <th className="px-4 py-3 text-left font-semibold">Project Name</th>
             <th className="px-4 py-3 text-left font-semibold">Description</th>
             <th className="px-4 py-3 text-left font-semibold">Created By</th>
             <th className="px-4 py-3 text-left font-semibold">Created Date</th>
             <th></th>
+
           </tr>
         </thead>
 
         <tbody className="text-gray-600">
+
           {projects.map((project) => (
             <tr key={project.id} className="border-t hover:bg-gray-50 transition">
+
               <td className="px-4 py-3">
                 <Checkbox aria-label={`Select ${project.name}`} />
               </td>
+
               <td className="px-4 py-3 font-medium">{project.name}</td>
               <td className="px-4 py-3">{project.desc}</td>
               <td className="px-4 py-3">{project.createdBy}</td>
               <td className="px-4 py-3">{project.date}</td>
               <td className="px-4 py-3 text-right">
+                
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon">
