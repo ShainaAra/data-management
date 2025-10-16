@@ -14,7 +14,7 @@ export function NavHeader() {
     <SidebarHeader>
       <SidebarGroup>
         <SidebarGroupLabel className="text-gray-500 px-4 py-2 text-sm">
-          Dashboard
+          Data Management
         </SidebarGroupLabel>
       </SidebarGroup>
     </SidebarHeader>

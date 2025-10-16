@@ -1,15 +1,15 @@
 "use client";
 
 import React from "react";
+import ImportTable from "@/app/dashboard/import-project/[projectId]/ImportTable";
 import ImportActions from "./ImportActions";
-import ImportTable from "./ImportTable";
 
 export default function ImportProject() {
   return (
     //spacing from header and between cards
     <div className="-mx-1 pt-2 pb-4">
 
-      {/* action Card */}
+      {/* action card */}
       <div className="bg-white border 
                       border-blue-500 
                       rounded-xl 
@@ -18,7 +18,7 @@ export default function ImportProject() {
         <ImportActions />
       </div>
 
-      {/* task table Card */}
+      {/* task table card */}
       <div className="bg-white 
                       border border-blue-500 
                       rounded-xl 

@@ -23,7 +23,8 @@ export default function Layout({ children }) {
 
         {/* Main content */}
         <div className="flex flex-1 flex-col">
-          <header className="flex items-center h-14 bg-white border-b px-4 gap-2">
+          <header className="flex items-center h-14 
+                           bg-white border-b px-4 gap-2">
             <SidebarTrigger />
             <Image
               src={AretexLogo}
