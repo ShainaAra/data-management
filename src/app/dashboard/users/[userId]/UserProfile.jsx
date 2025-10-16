@@ -1,27 +1,25 @@
 'use client';
 import React, { useState } from "react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const UserProfile = ({ user }) => {
   if (!user) return null;
 
   const [isEditing, setIsEditing] = useState(false);
   const [editableUser, setEditableUser] = useState(user);
-  const [showRoles, setShowRoles] = useState(false); // 🔹 toggle roles dropdown
+  const [showRoles, setShowRoles] = useState(false);
 
-  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditableUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Save edited data
   const handleSave = () => {
     setIsEditing(false);
     alert(`✅ User "${editableUser.name}" has been updated!`);
     console.log("Updated user data:", editableUser);
   };
 
-  // Cancel editing
   const handleCancel = () => {
     setIsEditing(false);
     setEditableUser(user);
@@ -60,14 +58,20 @@ const UserProfile = ({ user }) => {
         )}
       </div>
 
-      {/* Profile Header */}
+      {/* Profile Header with Avatar */}
       <div className="flex items-center gap-4 mb-6">
-        <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gray-200 text-xl font-semibold">
-          {editableUser.name
-            .split(" ")
-            .map((n) => n[0])
-            .join("")}
-        </div>
+        <Avatar className="w-16 h-16">
+          <AvatarImage
+            src={editableUser.avatarUrl}
+            alt={editableUser.name}
+          />
+          <AvatarFallback>
+            {editableUser.name
+              .split(" ")
+              .map((n) => n[0])
+              .join("")}
+          </AvatarFallback>
+        </Avatar>
 
         <div>
           {!isEditing ? (
@@ -99,7 +103,7 @@ const UserProfile = ({ user }) => {
         </div>
       </div>
 
-      {/* User Information */}
+      {/* User Info Table */}
       <table className="w-full border border-gray-200 rounded-lg mb-6">
         <tbody>
           <tr className="bg-gray-50">
@@ -157,7 +161,7 @@ const UserProfile = ({ user }) => {
         </tbody>
       </table>
 
-      {/* 🔽 Roles Section with Dropdown */}
+      {/* Roles Section */}
       <div className="mb-6">
         <button
           onClick={() => setShowRoles(!showRoles)}
@@ -182,7 +186,7 @@ const UserProfile = ({ user }) => {
         )}
       </div>
 
-      {/* ✅ Added: Editable Role Section (only visible in edit mode) */}
+      {/* Editable Role (only in edit mode) */}
       {isEditing && (
         <div className="mt-6 border-t pt-4">
           <h3 className="font-semibold text-gray-700 mb-2">Edit User Role</h3>
