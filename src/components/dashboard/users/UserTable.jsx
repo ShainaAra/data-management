@@ -1,15 +1,24 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const UserTable = () => {
   const router = useRouter();
-
-  // ✅ Dummy users array
-  const dummyUsers = [
+  const [users, setUsers] = useState([
     {
       userId: "AJ001",
       name: "Alex January",
@@ -28,21 +37,18 @@ const UserTable = () => {
       lastActive: "2 hours ago",
       status: "Inactive",
     },
-  ];
+  ]);
 
-  // ✅ Navigation and actions
+  const [selectedUser, setSelectedUser] = useState(null);
+
   const handleViewProfile = (user) => {
     router.push(`/dashboard/users/${user.userId}`);
   };
 
-  const handleEditUser = (user) => {
-    alert(`Edit user: ${user.name}`);
-  };
-
   const handleDeleteUser = (user) => {
-    if (confirm(`Are you sure you want to delete ${user.name}?`)) {
-      alert(`${user.name} deleted`);
-    }
+    // ❌ remove alert()
+    setUsers((prev) => prev.filter((u) => u.userId !== user.userId));
+    setSelectedUser(null);
   };
 
   return (
@@ -65,8 +71,7 @@ const UserTable = () => {
         </thead>
 
         <tbody>
-          {/* ✅ Loop through all dummy users */}
-          {dummyUsers.map((user) => (
+          {users.map((user) => (
             <tr
               key={user.userId}
               className="hover:bg-gray-50 transition"
@@ -76,7 +81,7 @@ const UserTable = () => {
               <td className="py-4 px-6">{user.status}</td>
               <td className="py-4 px-6">{user.lastActive}</td>
 
-              {/* Action menu */}
+              {/* Actions */}
               <td className="py-4 px-6 text-right">
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger asChild>
@@ -97,18 +102,56 @@ const UserTable = () => {
                       >
                         View
                       </DropdownMenu.Item>
-                      <DropdownMenu.Item
-                        className="px-3 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer rounded-sm"
-                        onSelect={() => handleDeleteUser(user)}
-                      >
-                        Delete
-                      </DropdownMenu.Item>
+
+                      {/* ✅ AlertDialog for Delete */}
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <DropdownMenu.Item
+                            className="px-3 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer rounded-sm"
+                            onSelect={(e) => {
+                              e.preventDefault();
+                              setSelectedUser(user);
+                            }}
+                          >
+                            Delete
+                          </DropdownMenu.Item>
+                        </AlertDialogTrigger>
+
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete User</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to delete{" "}
+                              <span className="font-semibold">{selectedUser?.name}</span>? 
+                              This action cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDeleteUser(selectedUser)}
+                              className="bg-red-600 text-white hover:bg-red-700"
+                            >
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </DropdownMenu.Content>
                   </DropdownMenu.Portal>
                 </DropdownMenu.Root>
               </td>
             </tr>
           ))}
+
+          {/* Empty state */}
+          {users.length === 0 && (
+            <tr>
+              <td colSpan="5" className="text-center py-6 text-gray-500">
+                No users found.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

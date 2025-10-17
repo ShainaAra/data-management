@@ -1,7 +1,7 @@
 import React from "react";
 import UserTableAction from "@/components/dashboard/users/UserTableAction";
 import UserTable from "@/components/dashboard/users/UserTable";
-import UserProfile from "@/app/dashboard/users/[userId]/UserProfile"; // keep this if needed elsewhere
+import UserProfile from "@/app/dashboard/users/[userId]/UserProfile"; 
 
 const UsersPage = () => {
   return (
