@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const UserTable = () => {
-  //router hook for navigation
   const router = useRouter();
   const [users, setUsers] = useState([
     {
@@ -39,10 +38,9 @@ const UserTable = () => {
       status: "Inactive",
     },
   ]);
-  //this holds the user currently selected for deletion
+ 
   const [selectedUser, setSelectedUser] = useState(null);
 
-  //navigate the selected user's profile page
   const handleViewProfile = (user) => {
     router.push(`/dashboard/users/${user.userId}`);
   };

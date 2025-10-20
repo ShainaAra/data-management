@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation"; // ✅ for navigation
+import { ArrowLeft } from "lucide-react"; // ✅ icon for back link
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
   AlertDialog,
@@ -17,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const UserProfile = ({ user }) => {
+  const router = useRouter(); // ✅ router for navigation
   if (!user) return null;
 
   const [isEditing, setIsEditing] = useState(false);
@@ -35,7 +38,7 @@ const UserProfile = ({ user }) => {
   const handleSaveConfirmed = () => {
     setIsEditing(false);
     setConfirmOpen(false);
-    setSuccessOpen(true); 
+    setSuccessOpen(true);
     console.log("Updated user data:", editableUser);
   };
 
@@ -46,6 +49,16 @@ const UserProfile = ({ user }) => {
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6 text-gray-800">
+
+      {/* ✅ Back to Users link */}
+      <button
+        onClick={() => router.push("/dashboard/users")}
+        className="flex items-center text-blue-600 hover:text-blue-800 hover:underline mb-4 transition"
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back to Users
+      </button>
+
       {/* Header */}
       <div className="flex justify-between items-center mb-6 border-b pb-3">
         <h2 className="text-2xl font-bold">
@@ -61,7 +74,7 @@ const UserProfile = ({ user }) => {
           </button>
         ) : (
           <div className="space-x-2">
-            {/*Save Confirmation*/}
+            {/* Save Confirmation */}
             <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
               <AlertDialogTrigger asChild>
                 <Button className="bg-green-600 hover:bg-green-700 text-white font-medium">
@@ -99,26 +112,7 @@ const UserProfile = ({ user }) => {
         )}
       </div>
 
-      {/*Success Dialog*/}
-      <AlertDialog open={successOpen} onOpenChange={setSuccessOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              User "{editableUser.name}" has been updated!
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              The user profile changes were successfully saved.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction onClick={() => setSuccessOpen(false)}>
-              OK
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
-      {/*Profile Header with Avatar*/}
+      {/* Profile Header with Avatar */}
       <div className="flex items-center gap-4 mb-6">
         <Avatar className="w-16 h-16">
           <AvatarImage src={editableUser.avatarUrl} alt={editableUser.name} />
@@ -237,7 +231,7 @@ const UserProfile = ({ user }) => {
         </tbody>
       </table>
 
-      {/*Roles Section */}
+      {/* Roles Section */}
       <div className="mb-6">
         <button
           onClick={() => setShowRoles(!showRoles)}
