@@ -63,7 +63,7 @@ export default function ImportTable() {
               <Checkbox aria-label="Select all projects" />
             </th>
 
-            <th className="px-4 py-3 text-left font-semibold">Project Name</th>
+            <th className="px-4 py-3 text-left font-semibold">Task Name</th>
             <th className="px-4 py-3 text-left font-semibold">Description</th>
             <th className="px-4 py-3 text-left font-semibold">Created By</th>
             <th className="px-4 py-3 text-left font-semibold">Created Date</th>
