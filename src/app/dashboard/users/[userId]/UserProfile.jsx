@@ -237,7 +237,7 @@ const UserProfile = ({ user }) => {
         </tbody>
       </table>
 
-      {/* ✅ Roles Section using Shadcn Checkbox */}
+      {/*Roles Section */}
       <div className="mb-6">
         <button
           onClick={() => setShowRoles(!showRoles)}
@@ -300,26 +300,6 @@ const UserProfile = ({ user }) => {
           </div>
         )}
       </div>
-
-      {/* Editable single main Role (if needed) */}
-      {isEditing && (
-        <div className="mt-6 border-t pt-4">
-          <h3 className="font-semibold text-gray-700 mb-2">
-            Primary Role
-          </h3>
-          <select
-            name="role"
-            value={editableUser.role || "Admin"}
-            onChange={handleChange}
-            className="border rounded-md px-3 py-2 w-full"
-          >
-            <option value="Admin">Admin</option>
-            <option value="Editor">Editor</option>
-            <option value="Viewer">Viewer</option>
-            <option value="Moderator">Moderator</option>
-          </select>
-        </div>
-      )}
     </div>
   );
 };

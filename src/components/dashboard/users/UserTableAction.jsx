@@ -40,7 +40,7 @@ const UserTableAction = () => {
 
       {/* Filters + Add User Button */}
       <div className="flex items-center gap-4">
-        {/*Status Filter using Shadcn Select */}
+        {/*Status Filter  */}
         <div className="flex items-center gap-2">
           <Label
             htmlFor="status"

@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const UserTable = () => {
+  //router hook for navigation
   const router = useRouter();
   const [users, setUsers] = useState([
     {
@@ -38,27 +39,29 @@ const UserTable = () => {
       status: "Inactive",
     },
   ]);
-
+  //this holds the user currently selected for deletion
   const [selectedUser, setSelectedUser] = useState(null);
 
+  //navigate the selected user's profile page
   const handleViewProfile = (user) => {
     router.push(`/dashboard/users/${user.userId}`);
   };
 
+  //delete a user from the table
   const handleDeleteUser = (user) => {
-    // ❌ remove alert()
+    
     setUsers((prev) => prev.filter((u) => u.userId !== user.userId));
     setSelectedUser(null);
   };
 
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 mt-2">
-      {/* Header */}
+      {/* Header Section*/}
       <div className="px-6 py-4 border-b">
         <h2 className="text-2xl font-semibold text-gray-800">User Management</h2>
       </div>
 
-      {/* Table */}
+      {/* Table Section */}
       <table className="w-full text-left text-sm">
         <thead className="bg-gray-100 text-gray-700">
           <tr>
@@ -103,7 +106,7 @@ const UserTable = () => {
                         View
                       </DropdownMenu.Item>
 
-                      {/* ✅ AlertDialog for Delete */}
+                      {/*AlertDialog for Delete */}
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <DropdownMenu.Item
@@ -120,11 +123,13 @@ const UserTable = () => {
                         <AlertDialogContent>
                           <AlertDialogHeader>
                             <AlertDialogTitle>Delete User</AlertDialogTitle>
+
                             <AlertDialogDescription>
                               Are you sure you want to delete{" "}
                               <span className="font-semibold">{selectedUser?.name}</span>? 
                               This action cannot be undone.
                             </AlertDialogDescription>
+
                           </AlertDialogHeader>
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
