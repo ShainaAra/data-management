@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation"; // ✅ for navigation
-import { ArrowLeft } from "lucide-react"; // ✅ icon for back link
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,10 +15,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+
+import UserProfileHeader from "./components/UserProfileHeader";
+import UserInfoTable from "./components/UserInfoTable";
+import UserRolesSection from "./components/UserRolesSection";
+import UserEditForm from "./components/UserEditForm";
+import { stringToColor, getContrastColor } from "@/lib/utils";
 
 const UserProfile = ({ user }) => {
-  const router = useRouter(); // ✅ router for navigation
+  const router = useRouter();
   if (!user) return null;
 
   const [isEditing, setIsEditing] = useState(false);
@@ -28,18 +33,16 @@ const UserProfile = ({ user }) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
-  // handle field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditableUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  // handle final save after confirmation
   const handleSaveConfirmed = () => {
     setIsEditing(false);
     setConfirmOpen(false);
     setSuccessOpen(true);
-    console.log("Updated user data:", editableUser);
+    console.log("✅ Updated user data:", editableUser);
   };
 
   const handleCancel = () => {
@@ -50,7 +53,7 @@ const UserProfile = ({ user }) => {
   return (
     <div className="bg-white shadow-md rounded-lg p-6 text-gray-800">
 
-      {/* ✅ Back to Users link */}
+      {/* Back link */}
       <button
         onClick={() => router.push("/dashboard/users")}
         className="flex items-center text-blue-600 hover:text-blue-800 hover:underline mb-4 transition"
@@ -60,63 +63,21 @@ const UserProfile = ({ user }) => {
       </button>
 
       {/* Header */}
-      <div className="flex justify-between items-center mb-6 border-b pb-3">
-        <h2 className="text-2xl font-bold">
-          User Profile: {editableUser.name}
-        </h2>
+      <UserProfileHeader
+        editableUser={editableUser}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        confirmOpen={confirmOpen}
+        setConfirmOpen={setConfirmOpen}
+        handleSaveConfirmed={handleSaveConfirmed}
+        handleCancel={handleCancel}
+      />
 
-        {!isEditing ? (
-          <button
-            onClick={() => setIsEditing(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md transition"
-          >
-            Edit
-          </button>
-        ) : (
-          <div className="space-x-2">
-            {/* Save Confirmation */}
-            <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
-              <AlertDialogTrigger asChild>
-                <Button className="bg-green-600 hover:bg-green-700 text-white font-medium">
-                  Save
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    Are you sure you want to save this?
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This will permanently update the user’s information.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={handleSaveConfirmed}
-                    className="bg-green-600 hover:bg-green-700"
-                  >
-                    Yes, Save
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-
-            <button
-              onClick={handleCancel}
-              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium px-4 py-2 rounded-md transition"
-            >
-              Cancel
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Profile Header with Avatar */}
+      {/* Avatar and basic info */}
       <div className="flex items-center gap-4 mb-6">
         <Avatar className="w-16 h-16">
           <AvatarImage src={editableUser.avatarUrl} alt={editableUser.name} />
-          <AvatarFallback>
+          <AvatarFallback className="bg-orange-400 text-Blue">
             {editableUser.name
               .split(" ")
               .map((n) => n[0])
@@ -124,176 +85,36 @@ const UserProfile = ({ user }) => {
           </AvatarFallback>
         </Avatar>
 
-        <div>
-          {!isEditing ? (
-            <>
-              <p className="text-lg font-semibold">{editableUser.name}</p>
-              <a
-                href={`mailto:${editableUser.email}`}
-                className="text-blue-600 hover:underline text-sm"
-              >
-                {editableUser.email}
-              </a>
-            </>
-          ) : (
-            <>
-              <input
-                name="name"
-                value={editableUser.name}
-                onChange={handleChange}
-                className="border rounded-md px-2 py-1 w-full mb-2"
-              />
-              <input
-                name="email"
-                value={editableUser.email}
-                onChange={handleChange}
-                className="border rounded-md px-2 py-1 w-full"
-              />
-            </>
-          )}
-        </div>
-      </div>
-
-      {/* User Info Table */}
-      <table className="w-full border border-gray-200 rounded-lg mb-6">
-        <tbody>
-          <tr className="bg-gray-50">
-            <td className="py-3 px-4 font-semibold w-1/4 border-b border-gray-200">
-              User ID
-            </td>
-            <td className="py-3 px-4 border-b border-gray-200">
-              {editableUser.userId}
-            </td>
-          </tr>
-
-          <tr>
-            <td className="py-3 px-4 font-semibold border-b border-gray-200">
-              Phone
-            </td>
-            <td className="py-3 px-4 border-b border-gray-200">
-              {!isEditing ? (
-                <a
-                  href={`tel:${editableUser.phone}`}
-                  className="text-blue-600 hover:underline"
-                >
-                  {editableUser.phone}
-                </a>
-              ) : (
-                <input
-                  name="phone"
-                  value={editableUser.phone}
-                  onChange={handleChange}
-                  className="border rounded-md px-2 py-1 w-full"
-                />
-              )}
-            </td>
-          </tr>
-
-          <tr className="bg-gray-50">
-            <td className="py-3 px-4 font-semibold border-b border-gray-200">
-              Created
-            </td>
-            <td className="py-3 px-4 border-b border-gray-200">
-              {editableUser.created}
-            </td>
-          </tr>
-
-          <tr>
-            <td className="py-3 px-4 font-semibold border-b border-gray-200">
-              Last Login
-            </td>
-            <td className="py-3 px-4 border-b border-gray-200">
-              {editableUser.lastActive}
-            </td>
-          </tr>
-
-          <tr className="bg-gray-50">
-            <td className="py-3 px-4 font-semibold border-b border-gray-200">
-              Status
-            </td>
-            <td className="py-3 px-4 border-b border-gray-200">
-              {!isEditing ? (
-                editableUser.status
-              ) : (
-                <select
-                  name="status"
-                  value={editableUser.status}
-                  onChange={handleChange}
-                  className="border rounded-md px-2 py-1 w-full"
-                >
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
-                  <option value="Suspended">Suspended</option>
-                </select>
-              )}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      {/* Roles Section */}
-      <div className="mb-6">
-        <button
-          onClick={() => setShowRoles(!showRoles)}
-          className="w-full flex justify-between items-center bg-gray-100 hover:bg-gray-200 rounded-md px-4 py-2 transition"
-        >
-          <span className="font-semibold text-gray-700">View Roles</span>
-          <span className="text-sm text-gray-500">
-            {showRoles ? "▲ Hide" : "▼ Show"}
-          </span>
-        </button>
-
-        {showRoles && (
-          <div className="mt-3 border rounded-md p-4 bg-gray-50">
-            {!isEditing ? (
-              <p>
-                <strong>Roles:</strong>{" "}
-                {editableUser.roles && editableUser.roles.length > 0
-                  ? editableUser.roles.join(", ")
-                  : "No roles assigned"}
-              </p>
-            ) : (
-              <div>
-                <label className="font-semibold text-gray-700 mb-2 block">
-                  Select Roles
-                </label>
-
-                <div className="space-y-3">
-                  {["Admin", "Editor", "Viewer", "Moderator", "Manager", "Support"].map(
-                    (role) => {
-                      const isChecked = editableUser.roles?.includes(role);
-
-                      return (
-                        <div key={role} className="flex items-center space-x-3">
-                          <Checkbox
-                            id={role}
-                            checked={isChecked}
-                            onCheckedChange={(checked) => {
-                              setEditableUser((prev) => {
-                                const roles = new Set(prev.roles || []);
-                                if (checked) roles.add(role);
-                                else roles.delete(role);
-                                return { ...prev, roles: Array.from(roles) };
-                              });
-                            }}
-                            className="rounded-full border-2 border-blue-500 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
-                          />
-                          <label
-                            htmlFor={role}
-                            className="text-sm font-medium leading-none text-gray-700"
-                          >
-                            {role}
-                          </label>
-                        </div>
-                      );
-                    }
-                  )}
-                </div>
-              </div>
-            )}
+        {!isEditing ? (
+          <div>
+            <p className="text-lg font-semibold">{editableUser.name}</p>
+            <a
+              href={`mailto:${editableUser.email}`}
+              className="text-blue-600 hover:underline text-sm"
+            >
+              {editableUser.email}
+            </a>
           </div>
+        ) : (
+          <UserEditForm editableUser={editableUser} handleChange={handleChange} />
         )}
       </div>
+
+      {/* Info Table */}
+      <UserInfoTable
+        editableUser={editableUser}
+        isEditing={isEditing}
+        handleChange={handleChange}
+      />
+
+      {/* Roles Section */}
+      <UserRolesSection
+        editableUser={editableUser}
+        setEditableUser={setEditableUser}
+        isEditing={isEditing}
+        showRoles={showRoles}
+        setShowRoles={setShowRoles}
+      />
     </div>
   );
 };

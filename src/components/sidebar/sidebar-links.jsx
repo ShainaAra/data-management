@@ -2,6 +2,9 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Button } from "@/components/ui/button"
+
 import {
   SidebarGroupContent,
   SidebarMenu,
@@ -33,24 +36,26 @@ export const navLinks = [
   },
 ]
 
-// render the sidebar links
 export function NavLinks() {
+  const pathname = usePathname() // get current path
+
   return (
     <SidebarGroupContent>
       <SidebarMenu className="space-y-2">
-        {navLinks.map((link, index) => (
-          <SidebarMenuItem key={index}>
-            <SidebarMenuButton
-              className="flex items-center p-3 rounded-md hover:bg-gray-200 transition"
-              asChild
-            >
-              <Link href={link.href}>
-                <link.icon className="mr-3 h-5 w-5" />
-                {link.title}
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        ))}
+        {navLinks.map((link) => {
+          const isActive = pathname.startsWith(link.href)
+
+          return (
+            <SidebarMenuItem key={link.title}>
+              <Button variant={isActive ? "default" : "ghost"} asChild>
+                <Link href={link.href} className="flex items-center justify-start w-full p-3 rounded-md text-left">
+                  <link.icon className="mr-3 h-5 w-5" />
+                  {link.title}
+                </Link>
+              </Button>
+            </SidebarMenuItem>
+          )
+        })}
       </SidebarMenu>
     </SidebarGroupContent>
   )
