@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -15,13 +17,13 @@ import {
 } from "@/components/ui/alert-dialog";
 
 export default function ProjectHeader({ project, setIsEditMode, onEdit }) {
-  const router = useRouter(); // ✅ Ensure we have access to the router instance
+  const router = useRouter(); // Ensure we have access to the router instance
 
   const handleDelete = () => {
-    // ✅ Simulate deletion (backend logic will be added later)
+    // Simulate deletion (backend logic will be added later)
     console.log(`Deleted project: ${project.name}`);
 
-    // ✅ Redirect back to main task table page
+    // Redirect back to main task table page
     router.push("/dashboard/import-project");
   };
 
@@ -49,12 +51,15 @@ export default function ProjectHeader({ project, setIsEditMode, onEdit }) {
           </AlertDialogTrigger>
 
           <AlertDialogContent>
+
             <AlertDialogHeader>
               <AlertDialogTitle>Delete Project</AlertDialogTitle>
+
               <AlertDialogDescription>
                 Are you sure you want to delete this project? This action cannot
                 be undone.
               </AlertDialogDescription>
+
             </AlertDialogHeader>
 
             <AlertDialogFooter>

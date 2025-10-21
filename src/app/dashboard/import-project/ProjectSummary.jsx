@@ -193,15 +193,18 @@ export default function ProjectSummary({ files, setFiles }) {
                       </DialogFooter>
                     </form>
 
-                    {/* ✅ Confirmation AlertDialog */}
+                    {/* Confirmation AlertDialog */}
                     <AlertDialog open={showConfirmSave} onOpenChange={setShowConfirmSave}>
+
                       <AlertDialogContent>
+
                         <AlertDialogHeader>
                           <AlertDialogTitle>Save changes?</AlertDialogTitle>
                           <AlertDialogDescription>
                             Are you sure you want to save your edits to this file? 
                           </AlertDialogDescription>
                         </AlertDialogHeader>
+
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction
@@ -218,17 +221,22 @@ export default function ProjectSummary({ files, setFiles }) {
 
                 {/* Delete File */}
                 <AlertDialog>
+
                   <AlertDialogTrigger asChild>
                     <Button variant="destructive" size="icon">
                       <Trash className="h-4 w-4" />
                     </Button>
                   </AlertDialogTrigger>
+                  
                   <AlertDialogContent>
+                    
                     <AlertDialogHeader>
                       <AlertDialogTitle>Delete this file?</AlertDialogTitle>
+
                       <AlertDialogDescription>
                         This action cannot be undone.
                       </AlertDialogDescription>
+                      
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>

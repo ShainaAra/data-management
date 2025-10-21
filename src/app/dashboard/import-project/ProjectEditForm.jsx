@@ -83,8 +83,9 @@ export default function ProjectEditForm({ project, setProject, setIsEditMode }) 
         </Button>
       </div>
 
-      {/* ✅ Confirmation Dialog */}
+      {/* Confirmation Dialog */}
       <AlertDialog open={showConfirm} onOpenChange={setShowConfirm}>
+
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Save changes?</AlertDialogTitle>
@@ -92,6 +93,7 @@ export default function ProjectEditForm({ project, setProject, setIsEditMode }) 
               Are you sure you want to save the updates to this project?
             </AlertDialogDescription>
           </AlertDialogHeader>
+
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleConfirmSave}>
@@ -99,6 +101,7 @@ export default function ProjectEditForm({ project, setProject, setIsEditMode }) 
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
+
       </AlertDialog>
     </form>
   );
