@@ -1,59 +1,27 @@
-'use client';
+"use client";
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-
-import UserProfileHeader from "./components/UserProfileHeader";
-import UserInfoTable from "./components/UserInfoTable";
-import UserRolesSection from "./components/UserRolesSection";
-import UserEditForm from "./components/UserEditForm";
-import { stringToColor, getContrastColor } from "@/lib/utils";
+import UserProfileEdit from "@/components/dashboard/users/[userId]/UserProfileEdit.jsx";
 
 const UserProfile = ({ user }) => {
   const router = useRouter();
-  if (!user) return null;
-
   const [isEditing, setIsEditing] = useState(false);
   const [editableUser, setEditableUser] = useState(user);
-  const [showRoles, setShowRoles] = useState(false);
-  const [confirmOpen, setConfirmOpen] = useState(false);
-  const [successOpen, setSuccessOpen] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditableUser((prev) => ({ ...prev, [name]: value }));
-  };
+  if (!user) return null;
 
-  const handleSaveConfirmed = () => {
+  const handleSave = (updatedUser) => {
+    setEditableUser(updatedUser);
     setIsEditing(false);
-    setConfirmOpen(false);
-    setSuccessOpen(true);
-    console.log("✅ Updated user data:", editableUser);
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-    setEditableUser(user);
+    console.log("✅ Saved user data:", updatedUser);
   };
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6 text-gray-800">
-
-      {/* Back link */}
+      {/* Back to Users */}
       <button
         onClick={() => router.push("/dashboard/users")}
         className="flex items-center text-blue-600 hover:text-blue-800 hover:underline mb-4 transition"
@@ -63,58 +31,91 @@ const UserProfile = ({ user }) => {
       </button>
 
       {/* Header */}
-      <UserProfileHeader
-        editableUser={editableUser}
-        isEditing={isEditing}
-        setIsEditing={setIsEditing}
-        confirmOpen={confirmOpen}
-        setConfirmOpen={setConfirmOpen}
-        handleSaveConfirmed={handleSaveConfirmed}
-        handleCancel={handleCancel}
-      />
-
-      {/* Avatar and basic info */}
-      <div className="flex items-center gap-4 mb-6">
-        <Avatar className="w-16 h-16">
-          <AvatarImage src={editableUser.avatarUrl} alt={editableUser.name} />
-          <AvatarFallback className="bg-orange-400 text-Blue">
-            {editableUser.name
-              .split(" ")
-              .map((n) => n[0])
-              .join("")}
-          </AvatarFallback>
-        </Avatar>
-
-        {!isEditing ? (
-          <div>
-            <p className="text-lg font-semibold">{editableUser.name}</p>
-            <a
-              href={`mailto:${editableUser.email}`}
-              className="text-blue-600 hover:underline text-sm"
-            >
-              {editableUser.email}
-            </a>
-          </div>
-        ) : (
-          <UserEditForm editableUser={editableUser} handleChange={handleChange} />
+      <div className="flex justify-between items-center mb-6 border-b pb-3">
+        <h2 className="text-2xl font-bold">
+          User Profile: {editableUser.name}
+        </h2>
+        {!isEditing && (
+          <button
+            onClick={() => setIsEditing(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md transition"
+          >
+            Edit
+          </button>
         )}
       </div>
 
-      {/* Info Table */}
-      <UserInfoTable
-        editableUser={editableUser}
-        isEditing={isEditing}
-        handleChange={handleChange}
-      />
+      {/* View or Edit */}
+      {!isEditing ? (
+        <>
+          <div className="flex items-center gap-4 mb-6">
+            <Avatar className="w-16 h-16">
+              <AvatarImage src={editableUser.avatarUrl} alt={editableUser.name} />
+              <AvatarFallback>
+                {editableUser.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
+              </AvatarFallback>
+            </Avatar>
 
-      {/* Roles Section */}
-      <UserRolesSection
-        editableUser={editableUser}
-        setEditableUser={setEditableUser}
-        isEditing={isEditing}
-        showRoles={showRoles}
-        setShowRoles={setShowRoles}
-      />
+            <div>
+              <p className="text-lg font-semibold">{editableUser.name}</p>
+              <a
+                href={`mailto:${editableUser.email}`}
+                className="text-blue-600 hover:underline text-sm"
+              >
+                {editableUser.email}
+              </a>
+            </div>
+          </div>
+
+          <table className="w-full border border-gray-200 rounded-lg mb-6">
+            <tbody>
+              <tr className="bg-gray-50">
+                <td className="py-3 px-4 font-semibold w-1/4">User ID</td>
+                <td className="py-3 px-4">{editableUser.userId}</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-semibold">Phone</td>
+                <td className="py-3 px-4">
+                  <a
+                    href={`tel:${editableUser.phone}`}
+                    className="text-blue-600 hover:underline"
+                  >
+                    {editableUser.phone}
+                  </a>
+                </td>
+              </tr>
+              <tr className="bg-gray-50">
+                <td className="py-3 px-4 font-semibold">Created</td>
+                <td className="py-3 px-4">{editableUser.created}</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-semibold">Last Login</td>
+                <td className="py-3 px-4">{editableUser.lastActive}</td>
+              </tr>
+              <tr className="bg-gray-50">
+                <td className="py-3 px-4 font-semibold">Status</td>
+                <td className="py-3 px-4">{editableUser.status}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div className="bg-gray-50 rounded-md p-4">
+            <strong>Roles:</strong>{" "}
+            {editableUser.roles && editableUser.roles.length > 0
+              ? editableUser.roles.join(", ")
+              : "No roles assigned"}
+          </div>
+        </>
+      ) : (
+        <UserProfileEdit
+          user={editableUser}
+          onSave={handleSave}
+          onCancel={() => setIsEditing(false)}
+        />
+      )}
     </div>
   );
 };
