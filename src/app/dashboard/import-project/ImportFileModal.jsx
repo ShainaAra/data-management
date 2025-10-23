@@ -56,16 +56,16 @@ export default function ImportFileModal({ onAddFile }) {
             onChange={(e) => setFormData({ ...formData, entity: e.target.value })}
             required
           />
+
           <Input
             type="file"
             onChange={(e) =>
-              setFormData({
-                ...formData,
-                fileUploaded: e.target.files[0]?.name || "",
+              setFormData({ ...formData, fileUploaded: e.target.files[0]?.name || "",
               })
             }
             required
           />
+
           <Input
             type="date"
             value={formData.createdDate}
@@ -74,12 +74,14 @@ export default function ImportFileModal({ onAddFile }) {
             }
             required
           />
+
           <Input
             placeholder="Format (CSV, JSON, etc.)"
             value={formData.format}
             onChange={(e) => setFormData({ ...formData, format: e.target.value })}
             required
           />
+
           <Textarea
             placeholder="Description"
             value={formData.description}
