@@ -47,7 +47,7 @@ export default function ImportModal({ isOpen, onClose, onSave, project, mode }) 
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-2">
           <div>
-            <label className="text-sm font-medium text-gray-700">Task Name</label>
+            <label className="text-sm font-medium text-gray-700">Project Name</label>
             <Input
               type="text"
               name="name"
@@ -59,7 +59,7 @@ export default function ImportModal({ isOpen, onClose, onSave, project, mode }) 
           </div>
 
           <div>
-            <label className="text-sm font-medium text-gray-700">Task Description</label>
+            <label className="text-sm font-medium text-gray-700">Project Description</label>
             <Textarea
               name="desc"
               value={formData.desc}

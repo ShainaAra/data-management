@@ -1,7 +1,7 @@
 import React from "react";
 
-const page = () => {
-  return <div>Export Page</div>
-};
+import ExportProject from "../../../components/dashboard/export-project/ExportProject";
 
-export default page;
+export default function Page() {
+  return <ExportProject />;
+}

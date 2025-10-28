@@ -91,7 +91,7 @@ export default function ImportTable() {
               <th className="px-4 py-3 text-left">
                 <Checkbox aria-label="Select all projects" />
               </th>
-              <th className="px-4 py-3 text-left font-semibold">Task Name</th>
+              <th className="px-4 py-3 text-left font-semibold">Project Name</th>
               <th className="px-4 py-3 text-left font-semibold">Description</th>
               <th className="px-4 py-3 text-left font-semibold">Created By</th>
               <th className="px-4 py-3 text-left font-semibold">Created Date</th>
@@ -207,7 +207,7 @@ export default function ImportTable() {
             <div className="space-y-3">
 
               <div>
-                <label className="block text-sm font-medium mb-1">Task Name</label>
+                <label className="block text-sm font-medium mb-1">Project Name</label>
                 <Input
                   value={projectToEdit.name}
                   onChange={(e) =>

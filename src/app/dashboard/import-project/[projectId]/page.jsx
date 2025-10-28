@@ -111,8 +111,9 @@ export default function ProjectDetails() {
     return <div className="p-6 text-gray-600">Loading project details...</div>;
 
   return (
-    <div className="-mx-1 mt-4">
-      <div className="border border-blue-400 bg-white rounded-md shadow-sm p-10 w-full">
+    <div className="p-2 md:p-4 lg:p-6">
+  <div className="bg-white border border-blue-500 rounded-2xl shadow-md p-8 md:p-10 max-w-7xl mx-auto">
+
         {/* back button */}
         <Link
           href="/dashboard/import-project"
@@ -129,6 +130,8 @@ export default function ProjectDetails() {
               isEditMode={isEditMode}
               onEdit={() => setIsEditMode(true)}
               onDelete={handleDeleteProject}
+
+              
             />
 
             {/* Toggle between Edit form or View mode */}

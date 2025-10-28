@@ -49,7 +49,7 @@ export default function ImportActions() {
                        px-3 py-1 
                        text-sm 
                        hover:bg-blue-700">
-            + New Task
+            + New Project
           </button>
         </div>
       </div>

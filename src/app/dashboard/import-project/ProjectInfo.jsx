@@ -24,17 +24,17 @@ export default function ProjectInfo({ project }) {
       {/* Project Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="border rounded-lg p-3 bg-gray-50">
-          <p className="text-sm text-gray-500">Task ID</p>
+          <p className="text-sm text-gray-500">Project ID</p>
           <p className="text-base font-medium text-gray-800">{project.id}</p>
         </div>
 
         <div className="border rounded-lg p-3 bg-gray-50">
-          <p className="text-sm text-gray-500">Task Name</p>
+          <p className="text-sm text-gray-500">Project Name</p>
           <p className="text-base font-medium text-gray-800">{project.name}</p>
         </div>
 
         <div className="border rounded-lg p-3 bg-gray-50 md:col-span-2">
-          <p className="text-sm text-gray-500">Task Description</p>
+          <p className="text-sm text-gray-500">Project Description</p>
           <p className="text-base font-medium text-gray-800">{project.desc}</p>
         </div>
 
