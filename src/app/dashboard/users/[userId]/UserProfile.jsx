@@ -16,12 +16,12 @@ const UserProfile = ({ user }) => {
   const handleSave = (updatedUser) => {
     setEditableUser(updatedUser);
     setIsEditing(false);
-    console.log("✅ Saved user data:", updatedUser);
+    console.log("Saved user data:", updatedUser);
   };
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6 text-gray-800">
-      {/* Back to Users */}
+      {/*Back to Users*/}
       <button
         onClick={() => router.push("/dashboard/users")}
         className="flex items-center text-blue-600 hover:text-blue-800 hover:underline mb-4 transition"
@@ -30,7 +30,7 @@ const UserProfile = ({ user }) => {
         Back to Users
       </button>
 
-      {/* Header */}
+      {/*Header*/}
       <div className="flex justify-between items-center mb-6 border-b pb-3">
         <h2 className="text-2xl font-bold">
           User Profile: {editableUser.name}
@@ -45,7 +45,7 @@ const UserProfile = ({ user }) => {
         )}
       </div>
 
-      {/* View or Edit */}
+      {/*View or Edit*/}
       {!isEditing ? (
         <>
           <div className="flex items-center gap-4 mb-6">

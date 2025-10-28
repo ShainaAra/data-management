@@ -27,12 +27,12 @@ const UserProfileEdit = ({ user, onSave, onCancel }) => {
   const handleSaveConfirmed = () => {
     setConfirmOpen(false);
     console.log("Updated user data:", editableUser);
-    onSave(editableUser); // pass data back to parent
+    onSave(editableUser); //pass data back to parent
   };
 
   return (
     <div>
-      {/* Editable Inputs */}
+      {/*Editable Inputs */}
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium">Name</label>
@@ -116,11 +116,11 @@ const UserProfileEdit = ({ user, onSave, onCancel }) => {
         </div>
       </div>
 
-      {/* Save / Cancel */}
+      {/*Save and Cancel*/}
       <div className="flex gap-3 mt-6">
         <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
           <AlertDialogTrigger asChild>
-            <Button className="bg-green-600 hover:bg-green-700 text-white font-medium">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white font-medium">
               Save
             </Button>
           </AlertDialogTrigger>
