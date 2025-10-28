@@ -137,7 +137,7 @@ const UserProfileEdit = ({ user, onSave, onCancel }) => {
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction
                 onClick={handleSaveConfirmed}
-                className="bg-green-600 hover:bg-green-700"
+                className="bg-blue-600 hover:bg-blue-700"
               >
                 Yes, Save
               </AlertDialogAction>

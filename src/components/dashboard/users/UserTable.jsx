@@ -133,7 +133,7 @@ const UserTable = () => {
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction
                               onClick={() => handleDeleteUser(selectedUser)}
-                              className="bg-red-600 text-white hover:bg-red-700"
+                              className="bg-blue-600 text-white hover:bg-orange-700"
                             >
                               Delete
                             </AlertDialogAction>
@@ -147,7 +147,7 @@ const UserTable = () => {
             </tr>
           ))}
 
-          {/* Empty state */}
+          {/*Empty state*/}
           {users.length === 0 && (
             <tr>
               <td colSpan="5" className="text-center py-6 text-gray-500">
