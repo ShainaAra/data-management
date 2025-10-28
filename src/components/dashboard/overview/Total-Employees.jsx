@@ -5,7 +5,7 @@ import { Users } from "lucide-react";
 
 
 export default function TotalEmployees() {
-  const totalEmployees = 125; // You can replace this with dynamic data later
+  const totalEmployees = 125; //replace this with dynamic data later
 
   return (
     <Card className="bg-white border border-gray-200 shadow-md rounded-2xl">

@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { FolderKanban } from "lucide-react"; // ✅ Importing an icon
+import { FolderKanban } from "lucide-react"; //Importing an icon
 
 export default function TotalProjects() {
   return (
