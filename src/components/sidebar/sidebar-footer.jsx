@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils" // optional utility if you have it
 
 export function SidebarFooter({ onSettingsClick }) {
   return (
-    <div className="mt-auto p-4 border-t border-gray-700">
+    <div className="mt-auto p-4 border-t border-gray-300">
       <button
         onClick={onSettingsClick}
         className={cn(
