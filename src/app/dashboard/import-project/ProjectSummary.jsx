@@ -35,6 +35,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import ImportFileModal from "./ImportFileModal";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandInput,
+  CommandItem,
+  CommandGroup,
+} from "@/components/ui/command";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+
+const ENTITY_OPTIONS = ["Customer", "Product", "Order", "Inventory"];
 
 export default function ProjectSummary({ files, setFiles }) {
   const [editFile, setEditFile] = useState(null);
@@ -132,17 +146,41 @@ export default function ProjectSummary({ files, setFiles }) {
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
-                        setShowConfirmSave(true); // open confirmation dialog
+                        setShowConfirmSave(true);
                       }}
                       className="space-y-3"
                     >
-                      <Input
-                        value={editFile?.entity || ""}
-                        onChange={(e) =>
-                          setEditFile({ ...editFile, entity: e.target.value })
-                        }
-                        placeholder="Entity"
-                      />
+                      {/* Combobox for Data Entity */}
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className="w-full justify-between"
+                          >
+                            {editFile?.entity || "Select Entity"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="p-0">
+                          <Command>
+                            <CommandInput placeholder="Search entity..." />
+                            <CommandGroup>
+                              {ENTITY_OPTIONS.map((entity) => (
+                                <CommandItem
+                                  key={entity}
+                                  onSelect={() =>
+                                    setEditFile({ ...editFile, entity })
+                                  }
+                                >
+                                  {entity}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+
+                      {/* File Upload */}
                       <Input
                         type="file"
                         onChange={(e) =>
@@ -156,23 +194,35 @@ export default function ProjectSummary({ files, setFiles }) {
                       <p className="text-xs text-gray-500">
                         Current: {editFile?.fileUploaded}
                       </p>
+
+                      {/* Created Date (Read-only) */}
                       <Input
                         type="date"
                         value={editFile?.createdDate || ""}
-                        onChange={(e) =>
-                          setEditFile({
-                            ...editFile,
-                            createdDate: e.target.value,
-                          })
-                        }
+                        disabled
                       />
-                      <Input
-                        value={editFile?.format || ""}
-                        onChange={(e) =>
-                          setEditFile({ ...editFile, format: e.target.value })
-                        }
-                        placeholder="Format"
-                      />
+
+                      {/* ✅ Source Data Format Select (horizontal label) */}
+                      <div className="flex items-center gap-4">
+                        <label className="w-32 text-black-600 text-sm font-semibold">
+                          Select Format
+                        </label>
+                        <Select
+                          value={editFile?.format}
+                          onValueChange={(value) =>
+                            setEditFile({ ...editFile, format: value })
+                          }
+                        >
+                          <SelectTrigger className="w-full border-gray-300 rounded-md text-sm">
+                            <SelectValue placeholder="Format Type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="CSV">CSV</SelectItem>
+                            <SelectItem value="XLSX">XLSX</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
                       <Textarea
                         value={editFile?.description || ""}
                         onChange={(e) =>
@@ -183,28 +233,23 @@ export default function ProjectSummary({ files, setFiles }) {
                         }
                         placeholder="Description"
                       />
+
                       <DialogFooter>
-                        <Button
-                          type="submit"
-                          className="bg-blue-600 text-white"
-                        >
+                        <Button type="submit" className="bg-blue-600 text-white">
                           Save Changes
                         </Button>
                       </DialogFooter>
                     </form>
 
-                    {/* Confirmation AlertDialog */}
+                    {/* Confirmation Dialog */}
                     <AlertDialog open={showConfirmSave} onOpenChange={setShowConfirmSave}>
-
                       <AlertDialogContent>
-
                         <AlertDialogHeader>
                           <AlertDialogTitle>Save changes?</AlertDialogTitle>
                           <AlertDialogDescription>
-                            Are you sure you want to save your edits to this file? 
+                            Are you sure you want to save your edits to this file?
                           </AlertDialogDescription>
                         </AlertDialogHeader>
-
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction
@@ -221,22 +266,18 @@ export default function ProjectSummary({ files, setFiles }) {
 
                 {/* Delete File */}
                 <AlertDialog>
-
                   <AlertDialogTrigger asChild>
                     <Button variant="destructive" size="icon">
                       <Trash className="h-4 w-4" />
                     </Button>
                   </AlertDialogTrigger>
-                  
+
                   <AlertDialogContent>
-                    
                     <AlertDialogHeader>
                       <AlertDialogTitle>Delete this file?</AlertDialogTitle>
-
                       <AlertDialogDescription>
                         This action cannot be undone.
                       </AlertDialogDescription>
-                      
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>

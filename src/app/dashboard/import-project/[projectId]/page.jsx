@@ -119,7 +119,7 @@ export default function ProjectDetails() {
           href="/dashboard/import-project"
           className="flex items-center gap-2 text-blue-600 hover:underline mb-6"
         >
-          <ArrowLeft className="h-4 w-4" /> Back to Projects
+          <ArrowLeft className="h-4 w-4" /> Back to Import Projects
         </Link>
 
         <Card className="border-none shadow-none">
@@ -143,8 +143,6 @@ export default function ProjectDetails() {
                 {/* Project Summary Table */}
                 <ProjectSummary files={dummyFiles} setFiles={setDummyFiles} />
 
-
-                
               </>
             ) : (
              <ProjectEditForm

@@ -225,7 +225,7 @@ export default function ExportTable() {
             <div className="space-y-3">
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Export Name
+                  Project Name
                 </label>
                 <Input
                   value={projectToEdit.name}

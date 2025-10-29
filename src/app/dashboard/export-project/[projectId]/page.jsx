@@ -3,7 +3,7 @@
 import React, { use } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import ExportViewDetails from "@/components/dashboard/export-project/ExportViewDetails";
+import ExportViewDetails from "@/app/dashboard/export-project/[projectId]/ExportViewDetails";
 
 export default function ExportProjectDetailsPage({ params }) {
   const resolvedParams = use(params);
@@ -48,24 +48,17 @@ export default function ExportProjectDetailsPage({ params }) {
 
   return (
     <div className="p-2 md:p-4 lg:p-6">
-  <div className="bg-white border border-blue-500 rounded-2xl shadow-md p-8 md:p-10 max-w-7xl mx-auto">
-
-        
+      <div className="bg-white border border-blue-500 rounded-2xl shadow-md p-8 md:p-10 max-w-7xl mx-auto">
         {/* Back Button */}
         <button
           onClick={() => router.back()}
-          className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-blue-600 transition mb-6"
+          className="flex items-center gap-2 text-blue-600 hover:underline mb-6"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Export Projects
         </button>
 
-        {/* Page Title */}
-        <h1 className="text-2xl font-semibold text-gray-800 mb-6">
-          Export Project Overview
-        </h1>
-
-        {/* Project Info Card */}
+        {/* Project Details */}
         <ExportViewDetails project={project} />
 
         {/* Project Summary Table */}
