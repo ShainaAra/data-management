@@ -15,11 +15,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export default function ProjectEditForm({ project, setProject, setIsEditMode }) {
+export default function ExportEditForm({ project, setProject, setIsEditMode }) {
   const [formData, setFormData] = useState({ ...project });
   const [showConfirm, setShowConfirm] = useState(false);
 
-  // Final save confirmation
   const handleConfirmSave = () => {
     setProject({
       ...project,
@@ -31,7 +30,7 @@ export default function ProjectEditForm({ project, setProject, setIsEditMode }) 
   };
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+    <form onSubmit={(e) => e.preventDefault()} className="space-y-4 mt-6">
       {/* Project Name */}
       <div>
         <label className="block text-sm font-medium mb-1">Project Name</label>
@@ -102,7 +101,7 @@ export default function ProjectEditForm({ project, setProject, setIsEditMode }) 
           <AlertDialogHeader>
             <AlertDialogTitle>Save changes?</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to save the updates to this project?
+              Are you sure you want to save the updates to this export project?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
