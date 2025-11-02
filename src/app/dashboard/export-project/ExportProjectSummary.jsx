@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Eye, Pencil, Trash, ChevronDown } from "lucide-react";
-
+import { Eye, Pencil, Trash } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -34,7 +33,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import ImportFileModal from "./ImportFileModal";
+import ExportFileModal from "./ExportFileModal";
 import {
   Popover,
   PopoverTrigger,
@@ -53,11 +52,11 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { ChevronDown } from "lucide-react";
 
 const ENTITY_OPTIONS = ["Customer", "Product", "Order", "Inventory"];
-const FILE_TYPES = ["CSV", "XLSX"];
 
-export default function ProjectSummary({ files, setFiles }) {
+export default function ExportProjectSummary({ files, setFiles }) {
   const [editFile, setEditFile] = useState(null);
   const [showConfirmSave, setShowConfirmSave] = useState(false);
 
@@ -77,11 +76,11 @@ export default function ProjectSummary({ files, setFiles }) {
     <div className="mt-10">
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-lg font-semibold text-gray-700">Project Summary</h3>
-        <ImportFileModal onAddFile={handleAddFile} />
+        <ExportFileModal onAddFile={handleAddFile} />
       </div>
 
       <Table>
-        <TableCaption>List of imported project files.</TableCaption>
+        <TableCaption>List of exported project files.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Data Entity</TableHead>
@@ -120,8 +119,12 @@ export default function ProjectSummary({ files, setFiles }) {
                       <DialogDescription>File Details</DialogDescription>
                     </DialogHeader>
                     <div className="space-y-2">
-                      <p><strong>File Uploaded:</strong> {file.fileUploaded}</p>
-                      <p><strong>Format:</strong> {file.format}</p>
+                      <p>
+                        <strong>File Uploaded:</strong> {file.fileUploaded}
+                      </p>
+                      <p>
+                        <strong>Format:</strong> {file.format}
+                      </p>
                     </div>
                   </DialogContent>
                 </Dialog>
@@ -141,7 +144,7 @@ export default function ProjectSummary({ files, setFiles }) {
                     </Button>
                   </DialogTrigger>
 
-                  <DialogContent className="sm:max-w-md">
+                  <DialogContent className="max-w-md">
                     <DialogHeader>
                       <DialogTitle>Edit File</DialogTitle>
                     </DialogHeader>
@@ -151,11 +154,11 @@ export default function ProjectSummary({ files, setFiles }) {
                         e.preventDefault();
                         setShowConfirmSave(true);
                       }}
-                      className="space-y-5"
+                      className="space-y-5 mt-3"
                     >
-                      {/* Data Entity (Combobox) */}
-                      <div>
-                        <label className="block text-sm font-bold text-gray-800 mb-1">
+                      {/* Data Entity */}
+                      <div className="flex flex-col space-y-2">
+                        <label className="text-sm font-bold text-gray-800">
                           Data Entity
                         </label>
                         <Popover>
@@ -190,8 +193,8 @@ export default function ProjectSummary({ files, setFiles }) {
                       </div>
 
                       {/* File Type */}
-                      <div>
-                        <label className="block text-sm font-bold text-gray-800 mb-1">
+                      <div className="flex flex-col space-y-2">
+                        <label className="text-sm font-bold text-gray-800">
                           File Type
                         </label>
                         <Select
@@ -200,26 +203,24 @@ export default function ProjectSummary({ files, setFiles }) {
                             setEditFile({ ...editFile, format: value })
                           }
                         >
-                          <SelectTrigger className="w-full h-10 border-gray-300 rounded-md text-sm">
+                          <SelectTrigger className="w-full h-10 text-sm border-gray-300 rounded-md font-normal">
                             <SelectValue placeholder="Select File Type" />
                           </SelectTrigger>
                           <SelectContent>
-                            {FILE_TYPES.map((type) => (
-                              <SelectItem key={type} value={type}>
-                                {type}
-                              </SelectItem>
-                            ))}
+                            <SelectItem value="CSV">CSV</SelectItem>
+                            <SelectItem value="XLSX">XLSX</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
 
                       {/* File Upload */}
-                      <div>
-                        <label className="block text-sm font-bold text-gray-800 mb-1">
+                      <div className="flex flex-col space-y-2">
+                        <label className="text-sm font-bold text-gray-800">
                           File Upload
                         </label>
                         <Input
                           type="file"
+                          className="w-full h-10 text-sm font-normal border-gray-300 rounded-md"
                           onChange={(e) =>
                             setEditFile({
                               ...editFile,
@@ -229,9 +230,8 @@ export default function ProjectSummary({ files, setFiles }) {
                             })
                           }
                           required
-                          className="h-10 text-sm"
                         />
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-gray-500">
                           Current: {editFile?.fileUploaded}
                         </p>
                       </div>
@@ -239,20 +239,24 @@ export default function ProjectSummary({ files, setFiles }) {
                       <DialogFooter>
                         <Button
                           type="submit"
-                          className="bg-blue-600 text-white hover:bg-blue-700"
+                          className="bg-blue-600 text-white hover:bg-blue-700 mt-3"
                         >
                           Save Changes
                         </Button>
                       </DialogFooter>
                     </form>
 
-                    {/* Confirm Save Dialog */}
-                    <AlertDialog open={showConfirmSave} onOpenChange={setShowConfirmSave}>
+                    {/* Confirm Save */}
+                    <AlertDialog
+                      open={showConfirmSave}
+                      onOpenChange={setShowConfirmSave}
+                    >
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle>Save changes?</AlertDialogTitle>
                           <AlertDialogDescription>
-                            Are you sure you want to save your edits to this file?
+                            Are you sure you want to save your edits to this
+                            file?
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>

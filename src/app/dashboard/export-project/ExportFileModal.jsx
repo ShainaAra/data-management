@@ -8,8 +8,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
   DialogTrigger,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import {
   Popover,
@@ -32,20 +32,19 @@ import {
 import { ChevronDown } from "lucide-react";
 
 const ENTITY_OPTIONS = ["Customer", "Product", "Order", "Inventory"];
-const FILE_TYPES = ["CSV", "XLSX"];
 
-export default function ImportFileModal({ onAddFile }) {
+export default function ExportFileModal({ onAddFile }) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     entity: "",
-    format: "",
     fileUploaded: "",
+    format: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddFile({ id: Date.now(), ...formData });
-    setFormData({ entity: "", format: "", fileUploaded: "" });
+    setFormData({ entity: "", fileUploaded: "", format: "" });
     setIsOpen(false);
   };
 
@@ -53,32 +52,30 @@ export default function ImportFileModal({ onAddFile }) {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button className="bg-blue-600 text-white hover:bg-blue-700">
-          Import File
+          Export File
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Import New File</DialogTitle>
+          <DialogTitle>Edit Export File</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Data Entity (Combobox) */}
-          <div>
-            <label className="block text-sm font-bold text-gray-800 mb-1">
-              Data Entity
-            </label>
+        <form onSubmit={handleSubmit} className="space-y-5 mt-3">
+          {/* Data Entity */}
+          <div className="flex flex-col space-y-2">
+            <label className="text-sm font-bold text-gray-800">Data Entity</label>
             <Popover>
               <PopoverTrigger asChild>
-                <button
+                <Button
                   type="button"
-                  className="w-full h-10 text-sm border border-gray-300 rounded-md bg-background px-3 py-2 flex items-center justify-between text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                  variant="outline"
+                  className="w-full h-10 border border-gray-300 rounded-md text-sm flex items-center justify-between px-3 font-normal bg-white"
                 >
                   {formData.entity || "Select Data Entity"}
-                  <ChevronDown className="h-4 w-4 opacity-50" />
-                </button>
+                  <ChevronDown className="h-4 w-4 opacity-60" />
+                </Button>
               </PopoverTrigger>
-
               <PopoverContent className="p-0 w-full">
                 <Command>
                   <CommandInput placeholder="Search entity..." />
@@ -98,36 +95,30 @@ export default function ImportFileModal({ onAddFile }) {
           </div>
 
           {/* File Type */}
-          <div>
-            <label className="block text-sm font-bold text-gray-800 mb-1">
-              File Type
-            </label>
+          <div className="flex flex-col space-y-2">
+            <label className="text-sm font-bold text-gray-800">File Type</label>
             <Select
               value={formData.format}
               onValueChange={(value) =>
                 setFormData({ ...formData, format: value })
               }
             >
-              <SelectTrigger className="w-full h-10 border-gray-300 rounded-md text-sm">
+              <SelectTrigger className="w-full h-10 text-sm border-gray-300 rounded-md font-normal">
                 <SelectValue placeholder="Select File Type" />
               </SelectTrigger>
               <SelectContent>
-                {FILE_TYPES.map((type) => (
-                  <SelectItem key={type} value={type}>
-                    {type}
-                  </SelectItem>
-                ))}
+                <SelectItem value="CSV">CSV</SelectItem>
+                <SelectItem value="XLSX">XLSX</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           {/* File Upload */}
-          <div>
-            <label className="block text-sm font-bold text-gray-800 mb-1">
-              File Upload
-            </label>
+          <div className="flex flex-col space-y-2">
+            <label className="text-sm font-bold text-gray-800">File Upload</label>
             <Input
               type="file"
+              className="w-full h-10 text-sm font-normal border-gray-300 rounded-md"
               onChange={(e) =>
                 setFormData({
                   ...formData,
@@ -135,17 +126,15 @@ export default function ImportFileModal({ onAddFile }) {
                 })
               }
               required
-              className="h-10 text-sm"
             />
           </div>
 
-          {/* Submit */}
           <DialogFooter>
             <Button
               type="submit"
-              className="bg-blue-600 text-white hover:bg-blue-700"
+              className="bg-blue-600 text-white hover:bg-blue-700 mt-3"
             >
-              Upload File
+              Save Changes
             </Button>
           </DialogFooter>
         </form>

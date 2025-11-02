@@ -1,29 +1,36 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Search } from "lucide-react";
+import ExportModal from "./ExportModal";
 
-export default function ExportActions({ onExportClick }) {
+export default function ExportActions() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <div className="flex items-center justify-between gap-4">
+    <>
+      {/* action box */}
+      <div className="flex items-center justify-between gap-4">
 
-      {/* Search Bar */}
-      <div className="flex items-center gap-3 
+      {/* search card */}
+        <div className="flex items-center gap-3 
                         border border-gray-300 
                         rounded-md 
                         px-3 py-2 w-[420px]">
 
-        <Search size={18} className="text-gray-600" />
-        
-        <input
-          type="text"
-          placeholder="Search..."
-          className="outline-none w-full text-sm"
-        />
-      </div>
+          <Search size={18} className="text-gray-600" />
 
-      {/* Export Now Button */}
-      <button
+          <input
+            type="text"
+            placeholder="Search..."
+            className="outline-none w-full text-sm"
+          />
+        </div>
+
+        {/* buttons */}
+        <div className="flex items-center gap-3">
+
+          <button
             onClick={() => setIsModalOpen(true)}
             className="bg-blue-600 
                        text-white 
@@ -31,8 +38,13 @@ export default function ExportActions({ onExportClick }) {
                        px-3 py-1 
                        text-sm 
                        hover:bg-blue-700">
-             Create New Project
+            + New Export Project
           </button>
-    </div>
+        </div>
+      </div>
+
+      {/* Modal */}
+      <ExportModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   );
 }
