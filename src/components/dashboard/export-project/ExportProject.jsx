@@ -1,27 +1,53 @@
 "use client";
 
 import React, { useState } from "react";
-import ExportTable from "./ExportTable";
+import ExportTable from "@/app/dashboard/export-project/[projectId]/ExportTable";
 import ExportActions from "./ExportActions";
+import ExportModal from "./ExportModal";
 
 export default function ExportProject() {
-  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingProject, setEditingProject] = useState(null);
 
-  const handleExport = () => {
-    alert("Exporting projects..."); // placeholder for future modal logic
+  // Open edit modal with selected project
+  const handleEdit = (project) => {
+    setEditingProject(project);
+    setIsEditModalOpen(true);
+  };
+
+  // Close modal
+  const handleCloseEditModal = () => {
+    setEditingProject(null);
+    setIsEditModalOpen(false);
+  };
+
+  // Save edits
+  const handleSaveEdit = (updatedProject) => {
+    console.log("Edited project:", updatedProject);
+    setEditingProject(null);
+    setIsEditModalOpen(false);
   };
 
   return (
     <div className="-mx-1 pt-2 pb-4">
-      {/* Top Action Card (same size and layout as import) */}
+      {/* + New Task Action Card (untouched) */}
       <div className="bg-white border border-blue-500 rounded-xl shadow-sm p-4 mb-2">
-        <ExportActions onExportClick={handleExport} />
+        <ExportActions />
       </div>
 
-      {/* Export Table (matches import layout) */}
+      {/* Task Table */}
       <div className="bg-white border border-blue-500 rounded-xl shadow-sm p-4">
-        <ExportTable />
+        <ExportTable onEdit={handleEdit} />
       </div>
+
+      {/* Edit Modal */}
+      <ExportModal
+        isOpen={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        onSave={handleSaveEdit}
+        project={editingProject}
+        mode="edit"
+      />
     </div>
   );
 }
