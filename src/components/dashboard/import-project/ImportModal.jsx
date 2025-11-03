@@ -41,7 +41,7 @@ export default function ImportModal({ isOpen, onClose, onSave, project, mode }) 
       <DialogContent className="sm:max-w-md bg-white rounded-lg shadow-lg">
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-gray-800">
-            {mode === "edit" ? "Edit Task" : "Add Task"}
+            {mode === "edit" ? "Edit Project" : "Add Project"}
           </DialogTitle>
         </DialogHeader>
 
@@ -53,7 +53,7 @@ export default function ImportModal({ isOpen, onClose, onSave, project, mode }) 
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Enter task name"
+              placeholder="Enter Project name"
               className="mt-1"
             />
           </div>
@@ -64,7 +64,7 @@ export default function ImportModal({ isOpen, onClose, onSave, project, mode }) 
               name="desc"
               value={formData.desc}
               onChange={handleChange}
-              placeholder="Enter task description"
+              placeholder="Enter Project description"
               rows="3"
               className="mt-1 resize-none"
             />
@@ -75,7 +75,7 @@ export default function ImportModal({ isOpen, onClose, onSave, project, mode }) 
               Cancel
             </Button>
             <Button type="submit" className="bg-blue-600 text-white hover:bg-blue-700">
-              {mode === "edit" ? "Save Changes" : "Add Task"}
+              {mode === "edit" ? "Save Changes" : "Add Project"}
             </Button>
           </DialogFooter>
         </form>
