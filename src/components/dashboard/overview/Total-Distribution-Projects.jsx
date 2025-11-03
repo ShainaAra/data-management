@@ -56,7 +56,6 @@ export default function TotalDistributionProjects() {
                 ))}
               </Pie>
               <ChartTooltip content={<ChartTooltipContent />} />
-              <ChartLegend content={<ChartLegendContent />} />
             </PieChart>
           </ResponsiveContainer>
         </ChartContainer>

@@ -1,12 +1,43 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import UserTableAction from "@/components/dashboard/users/UserTableAction";
 import UserTable from "@/components/dashboard/users/UserTable";
-import UserProfile from "@/app/dashboard/users/[userId]/UserProfile"; 
 
 const UsersPage = () => {
+  // Shared user state
+  const [users, setUsers] = useState([
+    {
+      userId: "AJ001",
+      name: "Alex January",
+      email: "alexj.artx@aretex.com",
+      phone: "+6912345678999",
+      created: "2023-01-15",
+      lastActive: "3 weeks ago",
+      status: "Active",
+    },
+    {
+      userId: "AN002",
+      name: "Adrian Nash",
+      email: "adrian.nash@aretex.com",
+      phone: "+6912345678123",
+      created: "2024-02-22",
+      lastActive: "2 hours ago",
+      status: "Inactive",
+    },
+  ]);
+
+  // Add new user
+  const handleAddUser = (newUser) => {
+    setUsers((prev) => [...prev, newUser]);
+  };
+
+  // Delete user
+  const handleDeleteUser = (userId) => {
+    setUsers((prev) => prev.filter((u) => u.userId !== userId));
+  };
+
   return (
     <div className="px-0.1 py-2">
       {/* Main container card */}
@@ -20,11 +51,11 @@ const UsersPage = () => {
         <CardContent className="pt-2">
           {/* Top bar section */}
           <div className="mb-3">
-            <UserTableAction />
+            <UserTableAction onAddUser={handleAddUser} />
           </div>
 
           {/* User table section */}
-          <UserTable />
+          <UserTable users={users} onDeleteUser={handleDeleteUser} />
         </CardContent>
       </Card>
     </div>

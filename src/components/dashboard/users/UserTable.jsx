@@ -16,50 +16,21 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-const UserTable = () => {
+const UserTable = ({ users, onDeleteUser }) => {
   const router = useRouter();
-  const [users, setUsers] = useState([
-    {
-      userId: "AJ001",
-      name: "Alex January",
-      email: "alexj.artx@aretex.com",
-      phone: "+6912345678999",
-      created: "2023-01-15",
-      lastActive: "3 weeks ago",
-      status: "Active",
-    },
-    {
-      userId: "AN002",
-      name: "Adrian Nash",
-      email: "adrian.nash@aretex.com",
-      phone: "+6912345678123",
-      created: "2024-02-22",
-      lastActive: "2 hours ago",
-      status: "Inactive",
-    },
-  ]);
- 
   const [selectedUser, setSelectedUser] = useState(null);
 
   const handleViewProfile = (user) => {
     router.push(`/dashboard/users/${user.userId}`);
   };
 
-  //delete a user from the table
   const handleDeleteUser = (user) => {
-    
-    setUsers((prev) => prev.filter((u) => u.userId !== user.userId));
+    onDeleteUser(user.userId);
     setSelectedUser(null);
   };
 
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 mt-2">
-      {/* Header Section*/}
-      <div className="px-6 py-4 border-b">
-        <h2 className="text-2xl font-semibold text-gray-800">User Management</h2>
-      </div>
-
-      {/* Table Section */}
       <table className="w-full text-left text-sm">
         <thead className="bg-gray-100 text-gray-700">
           <tr>
@@ -73,16 +44,11 @@ const UserTable = () => {
 
         <tbody>
           {users.map((user) => (
-            <tr
-              key={user.userId}
-              className="hover:bg-gray-50 transition"
-            >
+            <tr key={user.userId} className="hover:bg-gray-50 transition">
               <td className="py-4 px-6">{user.name}</td>
               <td className="py-4 px-6">{user.email}</td>
               <td className="py-4 px-6">{user.status}</td>
               <td className="py-4 px-6">{user.lastActive}</td>
-
-              {/* Actions */}
               <td className="py-4 px-6 text-right">
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger asChild>
@@ -104,7 +70,7 @@ const UserTable = () => {
                         View
                       </DropdownMenu.Item>
 
-                      {/*AlertDialog for Delete */}
+                      {/* Delete with confirmation */}
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <DropdownMenu.Item
@@ -121,13 +87,11 @@ const UserTable = () => {
                         <AlertDialogContent>
                           <AlertDialogHeader>
                             <AlertDialogTitle>Delete User</AlertDialogTitle>
-
                             <AlertDialogDescription>
                               Are you sure you want to delete{" "}
                               <span className="font-semibold">{selectedUser?.name}</span>? 
                               This action cannot be undone.
                             </AlertDialogDescription>
-
                           </AlertDialogHeader>
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -147,7 +111,6 @@ const UserTable = () => {
             </tr>
           ))}
 
-          {/*Empty state*/}
           {users.length === 0 && (
             <tr>
               <td colSpan="5" className="text-center py-6 text-gray-500">
