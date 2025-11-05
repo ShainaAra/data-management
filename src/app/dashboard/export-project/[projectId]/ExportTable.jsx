@@ -27,44 +27,28 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function ExportTable() {
+export default function ExportTable({ projects, setProjects }) {
   const router = useRouter();
   const [openDialogId, setOpenDialogId] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [projectToEdit, setProjectToEdit] = useState(null);
   const [openSaveDialog, setOpenSaveDialog] = useState(false);
-
-  const [projects, setProjects] = useState([
-    { id: 1, name: "PandaBot", desc: "IoT-based automation project", createdBy: "Nash", date: "2025-10-16" },
-    { id: 2, name: "Na-ar-tap", desc: "RFID Attendance System", createdBy: "Ara", date: "2025-10-10" },
-    { id: 3, name: "Obscura", desc: "Encryption and Decryption Calculator", createdBy: "Jamie", date: "2025-09-25" },
-  ]);
-
-  // Checkbox state
   const [selectedProjects, setSelectedProjects] = useState([]);
+
+  const handleSelectAll = (checked) => {
+    setSelectedProjects(checked ? projects.map((p) => p.id) : []);
+  };
+
+  const handleSelectOne = (id, checked) => {
+    setSelectedProjects((prev) =>
+      checked ? [...prev, id] : prev.filter((pid) => pid !== id)
+    );
+  };
 
   const allChecked = selectedProjects.length === projects.length && projects.length > 0;
   const partiallyChecked = selectedProjects.length > 0 && selectedProjects.length < projects.length;
 
-  const handleSelectAll = (checked) => {
-    if (checked) {
-      setSelectedProjects(projects.map((p) => p.id));
-    } else {
-      setSelectedProjects([]);
-    }
-  };
-
-  const handleSelectOne = (id, checked) => {
-    if (checked) {
-      setSelectedProjects((prev) => [...prev, id]);
-    } else {
-      setSelectedProjects((prev) => prev.filter((pid) => pid !== id));
-    }
-  };
-
-  const handleView = (project) => {
-    router.push(`/dashboard/export-project/${project.id}`);
-  };
+  const handleView = (project) => router.push(`/dashboard/export-project/${project.id}`);
 
   const handleEditClick = (project) => {
     setProjectToEdit({ ...project });
@@ -96,7 +80,7 @@ export default function ExportTable() {
                   aria-label="Select all projects"
                   checked={allChecked}
                   indeterminate={partiallyChecked}
-                  onCheckedChange={(checked) => handleSelectAll(checked)}
+                  onCheckedChange={handleSelectAll}
                 />
               </th>
               <th className="px-4 py-3 text-left font-semibold">Project Name</th>
@@ -142,11 +126,7 @@ export default function ExportTable() {
                         Edit
                       </DropdownMenuItem>
 
-                      {/* Delete with AlertDialog */}
-                      <AlertDialog
-                        open={openDialogId === project.id}
-                        onOpenChange={() => setOpenDialogId(project.id)}
-                      >
+                      <AlertDialog open={openDialogId === project.id} onOpenChange={() => setOpenDialogId(project.id)}>
                         <AlertDialogTrigger asChild>
                           <DropdownMenuItem
                             onSelect={(e) => {
@@ -189,76 +169,6 @@ export default function ExportTable() {
           </tbody>
         </table>
       </div>
-
-      {/* Edit Modal */}
-      {isEditModalOpen && projectToEdit && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-          <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md relative">
-            <button
-              onClick={() => setIsEditModalOpen(false)}
-              className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <h2 className="text-lg font-semibold mb-4">Edit Project</h2>
-
-            <div className="space-y-3">
-              <div>
-                <label className="block text-sm font-medium mb-1">Project Name</label>
-                <Input
-                  value={projectToEdit.name}
-                  onChange={(e) =>
-                    setProjectToEdit({ ...projectToEdit, name: e.target.value })
-                  }
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-1">Description</label>
-                <Textarea
-                  value={projectToEdit.desc}
-                  onChange={(e) =>
-                    setProjectToEdit({ ...projectToEdit, desc: e.target.value })
-                  }
-                />
-              </div>
-
-              <div className="flex justify-end gap-3 pt-4">
-                <Button variant="outline" onClick={() => setIsEditModalOpen(false)}>
-                  Cancel
-                </Button>
-
-                {/* Save Changes Alert */}
-                <AlertDialog open={openSaveDialog} onOpenChange={setOpenSaveDialog}>
-                  <AlertDialogTrigger asChild>
-                    <Button className="bg-black text-white hover:bg-gray-800">
-                      Save Changes
-                    </Button>
-                  </AlertDialogTrigger>
-
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Confirm Save</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Are you sure you want to save the changes to{" "}
-                        <strong>{projectToEdit.name}</strong>?
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={handleSaveConfirm}>
-                        Yes, Save Changes
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }
