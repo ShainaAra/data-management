@@ -25,24 +25,26 @@ const ImportExportChart = dynamic(
 
 export default function OverviewPage() {
   return (
-    <div className="flex-1 w-full min-h-screen overflow-x-hidden px-6 py-6">
-      {/* Main Wrapper Card */}
-      <Card className="w-full max-w-[100%] bg-white shadow-md rounded-lg border border-gray-200">
+    <div className="px-0.1 py-2">
+      {/* Main container card */}
+      <Card className="bg-white shadow-md rounded-lg border border-gray-200">
+        {/* Header */}
         <CardHeader className="pb-2 border-b">
           <CardTitle className="text-3xl font-semibold text-gray-800">
-            Overview Page
+            Overview
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="pt-6 space-y-6 w-full">
-          {/*Overview Stats - Reduced spacing between cards */}
+        {/* Content */}
+        <CardContent className="pt-4 space-y-6 w-full">
+          {/* Overview Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full">
             <TotalEmployees />
             <TotalProjects />
             <TotalDistributionProjects />
           </div>
 
-          {/*Accordions */}
+          {/* Accordions */}
           <Accordion type="multiple" className="w-full space-y-2">
             {/* IMPORT */}
             <AccordionItem value="import" className="border-none w-full">

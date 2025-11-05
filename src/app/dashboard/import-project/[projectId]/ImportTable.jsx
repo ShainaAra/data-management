@@ -35,7 +35,7 @@ export default function ImportTable({projects, setProjects}) {
   const [openSaveDialog, setOpenSaveDialog] = useState(false);
 
 
-  // ✅ Track selected projects
+  //  Track selected projects
   const [selectedProjects, setSelectedProjects] = useState([]);
 
   const handleSelectAll = (checked) => {
