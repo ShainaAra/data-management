@@ -19,13 +19,39 @@ import {
 import { Button } from "@/components/ui/button";
 import { FileText, ArrowDownToLine, ChevronDown } from "lucide-react";
 
+// --- START: ROUTING FIX ---
+// This mock simulates the Next.js router.
+// We are using window.location.href to force a visible navigation event
+// in environments that don't natively support Next.js routing.
+function useRouter() {
+  return {
+    push: (path) => {
+      console.log(`[ROUTER MOCK] Attempting navigation to: ${path}`);
+      // Use location.href to simulate navigation in the browser environment
+      // This will visually change the URL for the component preview.
+      window.location.href = path; 
+    },
+  };
+}
+// --- END: ROUTING FIX ---
+
 export default function RecentImportProjects() {
-  const imports = [
-    { id: 1, name: "Import Batch #A203", date: "Oct 22, 2025", status: "Completed" },
-    { id: 2, name: "China Shipment 12", date: "Oct 18, 2025", status: "In Transit" },
-    { id: 3, name: "Container #XZ145", date: "Oct 11, 2025", status: "Pending" },
-    { id: 4, name: "Import File 2025Q3", date: "Sept 30, 2025", status: "Completed" },
+  // Use the mock router here, which is structurally identical to the real useRouter()
+  const router = useRouter(); 
+  
+  // Updated dummy projects data
+  const projects = [
+    { id: 1, name: "PandaBot", date: "2025-10-16", status: "Completed" },
+    { id: 2, name: "Na-ar-tap", date: "2025-10-10", status: "In Transit" },
+    { id: 3, name: "Obscura", date: "2025-09-25", status: "Pending" },
   ];
+
+  // Function to handle row click and implement navigation.
+  const handleRowClick = (projectId) => {
+    // Navigates to the /dashboard/import-project/[projectId] route.
+    const path = `/dashboard/import-project/${projectId}`;
+    router.push(path);
+  };
 
   return (
     <div className="bg-white shadow-md border border-gray-200 rounded-2xl p-4">
@@ -67,15 +93,22 @@ export default function RecentImportProjects() {
         </TableHeader>
 
         <TableBody>
-          {imports.map((item) => (
+          {projects.map((item) => (
+            // Removed the onClick from the TableRow to prevent duplicate navigation,
+            // as the click is now on the project name span.
             <TableRow
               key={item.id}
-              className="hover:bg-gray-50 cursor-pointer transition"
+              className="hover:bg-gray-50 transition"
             >
-              {/* Project Name */}
+              {/* Project Name - Styled to look like a link and made the primary target */}
               <TableCell className="flex items-center gap-2">
                 <FileText className="text-gray-500" size={18} />
-                {item.name}
+                <span 
+                  className="text-blue-600 hover:text-blue-800 underline cursor-pointer font-medium"
+                  onClick={() => handleRowClick(item.id)}
+                >
+                  {item.name}
+                </span>
               </TableCell>
 
               {/* Date — Center Aligned, No Icon */}
