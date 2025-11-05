@@ -19,13 +19,39 @@ import {
 import { Button } from "@/components/ui/button";
 import { FileText, ArrowUpToLine, ChevronDown } from "lucide-react";
 
+// --- START: ROUTING FIX ---
+// This mock simulates the Next.js router.
+// It uses window.location.href to force a visible navigation event
+// in environments that don't natively support Next.js routing.
+function useRouter() {
+  return {
+    push: (path) => {
+      console.log(`[ROUTER MOCK] Attempting navigation to: ${path}`);
+      // Use location.href to simulate navigation in the browser environment
+      // This will visually change the URL for the component preview.
+      window.location.href = path; 
+    },
+  };
+}
+// --- END: ROUTING FIX ---
+
 export default function RecentExportProjects() {
+  // Use the mock router
+  const router = useRouter(); 
+
   const exports = [
     { id: 1, name: "Export Batch #X120", date: "Oct 25, 2025", status: "Completed" },
     { id: 2, name: "Shipment to Japan", date: "Oct 21, 2025", status: "Processing" },
     { id: 3, name: "Client Order #920", date: "Oct 12, 2025", status: "Pending" },
     { id: 4, name: "Export File Q3-2025", date: "Sept 29, 2025", status: "Completed" },
   ];
+
+  // Function to handle row click and implement navigation.
+  const handleRowClick = (projectId) => {
+    // Navigates to the /dashboard/export-project/[projectId] route.
+    const path = `/dashboard/export-project/${projectId}`;
+    router.push(path);
+  };
 
   return (
     <div className="bg-white shadow-md border border-gray-200 rounded-2xl p-4">
@@ -70,12 +96,17 @@ export default function RecentExportProjects() {
           {exports.map((item) => (
             <TableRow
               key={item.id}
-              className="hover:bg-gray-50 cursor-pointer transition"
+              className="hover:bg-gray-50 transition"
             >
-              {/* Project Name */}
+              {/* Project Name - Styled to look like a link and made the primary target */}
               <TableCell className="flex items-center gap-2">
                 <FileText className="text-gray-500" size={18} />
-                {item.name}
+                <span
+                  className="text-blue-600 hover:text-blue-800 underline cursor-pointer font-medium"
+                  onClick={() => handleRowClick(item.id)}
+                >
+                  {item.name}
+                </span>
               </TableCell>
 
               {/* Date — Center Aligned (No Icon) */}
