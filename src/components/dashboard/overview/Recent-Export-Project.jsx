@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Table,
   TableBody,
@@ -19,38 +20,46 @@ import {
 import { Button } from "@/components/ui/button";
 import { FileText, ArrowUpToLine, ChevronDown } from "lucide-react";
 
-// --- START: ROUTING FIX ---
-// This mock simulates the Next.js router.
-// It uses window.location.href to force a visible navigation event
-// in environments that don't natively support Next.js routing.
-function useRouter() {
-  return {
-    push: (path) => {
-      console.log(`[ROUTER MOCK] Attempting navigation to: ${path}`);
-      // Use location.href to simulate navigation in the browser environment
-      // This will visually change the URL for the component preview.
-      window.location.href = path; 
-    },
-  };
-}
-// --- END: ROUTING FIX ---
-
 export default function RecentExportProjects() {
-  // Use the mock router
-  const router = useRouter(); 
-
-  const exports = [
-    { id: 1, name: "Export Batch #X120", date: "Oct 25, 2025", status: "Completed" },
-    { id: 2, name: "Shipment to Japan", date: "Oct 21, 2025", status: "Processing" },
-    { id: 3, name: "Client Order #920", date: "Oct 12, 2025", status: "Pending" },
-    { id: 4, name: "Export File Q3-2025", date: "Sept 29, 2025", status: "Completed" },
+  // Reuse the same dummy export project data
+  const exportProjects = [
+    {
+      id: 1,
+      name: "PandaBot",
+      desc: "IoT-based automation project",
+      createdBy: "Nash",
+      date: "2025-10-16",
+      status: "Completed",
+    },
+    {
+      id: 2,
+      name: "Na-ar-tap",
+      desc: "RFID Attendance System",
+      createdBy: "Ara",
+      date: "2025-10-10",
+      status: "In Progress",
+    },
+    {
+      id: 3,
+      name: "Obscura",
+      desc: "Encryption and Decryption Calculator",
+      createdBy: "Jamie",
+      date: "2025-09-25",
+      status: "Pending",
+    },
   ];
 
-  // Function to handle row click and implement navigation.
-  const handleRowClick = (projectId) => {
-    // Navigates to the /dashboard/export-project/[projectId] route.
-    const path = `/dashboard/export-project/${projectId}`;
-    router.push(path);
+  const getStatusBadgeClasses = (status) => {
+    switch (status) {
+      case "Completed":
+        return "bg-green-100 text-green-700";
+      case "In Progress":
+        return "bg-blue-100 text-blue-700";
+      case "Pending":
+        return "bg-yellow-100 text-yellow-700";
+      default:
+        return "bg-gray-100 text-gray-700";
+    }
   };
 
   return (
@@ -62,7 +71,6 @@ export default function RecentExportProjects() {
           Recent Export Projects
         </h2>
 
-        {/* Dropdown Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -93,37 +101,25 @@ export default function RecentExportProjects() {
         </TableHeader>
 
         <TableBody>
-          {exports.map((item) => (
-            <TableRow
-              key={item.id}
-              className="hover:bg-gray-50 transition"
-            >
-              {/* Project Name - Styled to look like a link and made the primary target */}
+          {exportProjects.map((item) => (
+            <TableRow key={item.id} className="hover:bg-gray-50 transition">
               <TableCell className="flex items-center gap-2">
                 <FileText className="text-gray-500" size={18} />
-                <span
-                  className="text-blue-600 hover:text-blue-800 underline cursor-pointer font-medium"
-                  onClick={() => handleRowClick(item.id)}
+                <Link
+                  href={`/dashboard/export-project/${item.id}`}
+                  className="text-blue-600 hover:text-blue-800 underline font-medium"
                 >
                   {item.name}
-                </span>
+                </Link>
               </TableCell>
 
-              {/* Date — Center Aligned (No Icon) */}
               <TableCell className="text-gray-600 text-center">
                 {item.date}
               </TableCell>
 
-              {/* Status — Center Aligned */}
               <TableCell className="text-center">
                 <span
-                  className={`inline-block px-2 py-1 text-sm font-medium rounded-full ${
-                    item.status === "Completed"
-                      ? "bg-green-100 text-green-700"
-                      : item.status === "Processing"
-                      ? "bg-blue-100 text-blue-700"
-                      : "bg-yellow-100 text-yellow-700"
-                  }`}
+                  className={`inline-block px-2 py-1 text-sm font-medium rounded-full ${getStatusBadgeClasses(item.status)}`}
                 >
                   {item.status}
                 </span>

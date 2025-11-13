@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import { Settings } from "lucide-react" // or your icon library
-import { cn } from "@/lib/utils" // optional utility if you have it
+import { Settings } from "lucide-react" 
+import { cn } from "@/lib/utils"
 
 export function SidebarFooter({ onSettingsClick }) {
   return (

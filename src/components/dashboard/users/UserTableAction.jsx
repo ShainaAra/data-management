@@ -25,7 +25,7 @@ import { useState } from "react";
 const UserTableAction = ({ onAddUser }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [open, setOpen] = useState(false); // ✅ controls the dialog visibility
+  const [open, setOpen] = useState(false); //controls the dialog visibility
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,7 +50,7 @@ const UserTableAction = ({ onAddUser }) => {
     setName("");
     setEmail("");
 
-    // ✅ Close dialog only after successful submit
+    //Close dialog only after successful submit
     setOpen(false);
   };
 

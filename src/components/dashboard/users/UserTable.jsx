@@ -34,22 +34,22 @@ const UserTable = ({ users, onDeleteUser }) => {
       <table className="w-full text-left text-sm">
         <thead className="bg-gray-100 text-gray-700">
           <tr>
-            <th className="py-3 px-6 font-semibold border-b">Name</th>
-            <th className="py-3 px-6 font-semibold border-b">Email</th>
-            <th className="py-3 px-6 font-semibold border-b">Status</th>
-            <th className="py-3 px-6 font-semibold border-b">Last Active</th>
-            <th className="py-3 px-6 font-semibold border-b text-right">Actions</th>
+            <th className="py-3 px-6 font-semibold border-b border-gray-200">Name</th>
+            <th className="py-3 px-6 font-semibold border-b border-gray-200">Email</th>
+            <th className="py-3 px-6 font-semibold border-b border-gray-200">Status</th>
+            <th className="py-3 px-6 font-semibold border-b border-gray-200">Last Active</th>
+            <th className="py-3 px-6 font-semibold border-b border-gray-200 text-right">Actions</th>
           </tr>
         </thead>
 
         <tbody>
           {users.map((user) => (
             <tr key={user.userId} className="hover:bg-gray-50 transition">
-              <td className="py-4 px-6">{user.name}</td>
-              <td className="py-4 px-6">{user.email}</td>
-              <td className="py-4 px-6">{user.status}</td>
-              <td className="py-4 px-6">{user.lastActive}</td>
-              <td className="py-4 px-6 text-right">
+              <td className="py-4 px-6 border-b border-gray-200">{user.name}</td>
+              <td className="py-4 px-6 border-b border-gray-200">{user.email}</td>
+              <td className="py-4 px-6 border-b border-gray-200">{user.status}</td>
+              <td className="py-4 px-6 border-b border-gray-200">{user.lastActive}</td>
+              <td className="py-4 px-6 text-right border-b border-gray-200">
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger asChild>
                     <button className="p-2 rounded-full hover:bg-gray-100 transition">
